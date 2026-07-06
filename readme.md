@@ -4,7 +4,7 @@
 - It uses R and Terra
 - The scripts were created using various LLMs underneath OpenCode, including CIT's Gemma 4 and the DREAM Lab's granted GCP.
 - Viewing the maps against the data allowed me to conclude that any fire marked 1900 meant that it was BEFORE 1900.
-  - That may or may not be stated in the metadata.
+  - That is stated in the metadata. 
 
 ## Things I learned
 

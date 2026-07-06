@@ -1,92 +1,70 @@
-library(terra)
+# Load utilities
+source("utils.R")
 
 # 1. Load Counties and filter for Oregon (STATEFP == "41")
-print("Loading and projecting counties...")
-counties <- vect("data/tl_2023_us_county.shp")
-or_counties <- counties[counties$STATEFP == "41", ]
+log_msg("Loading and projecting counties...")
+or_counties_3857 <- load_oregon_counties(crs_target = "EPSG:3857")
 
-# Calculate Southwest Oregon quarter bounding box in lon/lat (EPSG:4269)
-ext_lonlat <- ext(or_counties)
-mid_x <- (ext_lonlat[1] + ext_lonlat[2]) / 2
-mid_y <- (ext_lonlat[3] + ext_lonlat[4]) / 2
-sw_box_lonlat <- ext(ext_lonlat[1], mid_x, ext_lonlat[3], mid_y)
+# Calculate Southwest Oregon quarter bounding box in EPSG:3857 (western half and southern half)
+ext_3857 <- terra::ext(or_counties_3857)
+mid_x <- (ext_3857[1] + ext_3857[2]) / 2
+mid_y <- (ext_3857[3] + ext_3857[4]) / 2
+sw_ext_3857 <- terra::ext(ext_3857[1], mid_x, ext_3857[3], mid_y)
 
 # Convert Southwest bounding box to a SpatVector and project to EPSG:3857
-sw_poly_lonlat <- as.polygons(sw_box_lonlat, crs = "EPSG:4269")
-sw_poly_3857 <- project(sw_poly_lonlat, "EPSG:3857")
-sw_ext_3857 <- ext(sw_poly_3857)
+# Using precomputed sw_ext_3857
 
-# Project Oregon counties to EPSG:3857
-or_counties_3857 <- project(or_counties, "EPSG:3857")
+# 2. Load Historic Fires, filter for 1900
+log_msg("Loading and filtering historic fires (year 1900)...")
+fires_1900_3857 <- load_historic_fires(crs_target = "EPSG:3857", year = 1900)
+log_msg(paste("Number of 1900 fires:", nrow(fires_1900_3857)))
 
-# 2. Load Historic Fires and filter for 1900
-print("Loading and filtering historic fires (year 1900)...")
-fires_3857 <- vect("data/Historic_OR_Fires/Historic_Fires_(pre_2000).shp")
-fires_1900_3857 <- fires_3857[fires_3857$FIRE_YEAR == "1900" & !is.na(fires_3857$FIRE_YEAR), ]
-print(paste("Number of 1900 fires:", nrow(fires_1900_3857)))
-
-# 3. Load, downsample, and project rasters
-print("Loading, downsampling, and projecting rasters...")
-raster_files <- list.files("data/forest_maps", pattern = "\\.jpg$", full.names = TRUE)
-
-projected_rasters <- list()
-for (rf in raster_files) {
-  print(paste("Processing raster:", basename(rf)))
-  r <- rast(rf)
-  
-  # Downsample by a factor of 5 for southwest quarter
-  r_sub <- aggregate(r, fact = 5)
-  
-  # Project to EPSG:3857
-  r_proj <- project(r_sub, "EPSG:3857")
-  
-  projected_rasters[[basename(rf)]] <- r_proj
-}
+# 3. Load, downsample, and project rasters (detail for southwest)
+log_msg("Loading, downsampling, and projecting rasters...")
+projected_rasters <- load_rasters(down_factor = 5, crs_target = "EPSG:3857")
 
 # 4. Define plot extent based on Southwest Oregon (no padding)
 xlims <- c(sw_ext_3857[1], sw_ext_3857[2])
 ylims <- c(sw_ext_3857[3], sw_ext_3857[4])
 
-# 5. Create output directory if it doesn't exist
-output_dir <- "output"
-if (!dir.exists(output_dir)) dir.create(output_dir, recursive = TRUE)
-output_path <- file.path(output_dir, "03_oregon_southwest_1900_map.png")
+# 5. Ensure output directory
+ensure_output_dir("output")
+output_path <- file.path("output", "03_oregon_southwest_1900_map.png")
 
-# 6. Plotting to high-resolution large image
-print(paste("Plotting Southwest Oregon 1900 composite to:", output_path))
+# 6. Plotting
+log_msg(paste("Plotting Southwest Oregon 1900 composite to:", output_path))
 png(output_path, width = 2400, height = 1800, res = 200)
 
-# Start with empty plot of Oregon counties filtered to the southwest viewport to establish coordinates
-plot(or_counties_3857, col = "gray95", border = "gray70", lwd = 1,
+terra::plot(or_counties_3857, col = "gray95", border = "gray70", lwd = 1,
      xlim = xlims, ylim = ylims,
-      main = "Southwest Oregon Year 1900 Forest Fires & Historical Forest Maps\n(Produced by plot_southwest_1900.R)",
+     main = "Southwest Oregon Year 1900 Forest Fires & Historical Forest Maps\n(Produced by plot_southwest_1900.R)",
      mar = c(3, 3, 4, 3))
 
-# Plot each raster using plotRGB with add=TRUE
+# Overlay rasters
 for (name in names(projected_rasters)) {
-  print(paste("Overlaying raster:", name))
+  log_msg(paste("Overlaying raster:", name))
   tryCatch({
     plotRGB(projected_rasters[[name]], r = 1, g = 2, b = 3, add = TRUE)
   }, error = function(e) {
-    print(paste("Error plotting", name, ":", e$message))
+    log_msg(paste("Error plotting", name, ":", e$message))
   })
 }
 
-# Plot Oregon counties outlines on top of the rasters
-plot(or_counties_3857, col = NA, border = "black", lwd = 1.2, add = TRUE)
+# County outlines
+terra::plot(or_counties_3857, col = NA, border = "black", lwd = 1.2, add = TRUE)
 
-# Plot year 1900 fires on top of everything
+# Plot 1900 fires if any
 if (nrow(fires_1900_3857) > 0) {
-  plot(fires_1900_3857, col = rgb(1, 0, 0, 0.4), border = "darkred", lwd = 1, add = TRUE)
+  terra::plot(fires_1900_3857, col = rgb(1, 0, 0, 0.4), border = "darkred", lwd = 1, add = TRUE)
 } else {
-  print("No fires found for 1900 in the dataset.")
+  log_msg("No fires found for 1900 in the dataset.")
 }
 
-# Add a simple map legend
+# Legend
 legend("bottomleft", legend = c("County Boundaries", "1900 Forest Fires"),
        col = c("black", "darkred"), lty = 1, lwd = c(1.2, 1),
        fill = c(NA, rgb(1, 0, 0, 0.4)), border = c("black", "darkred"),
        bg = "white", cex = 0.8)
 
 dev.off()
-print("Southwest 1900 map completed successfully!")
+log_msg("Southwest 1900 map completed successfully!")
