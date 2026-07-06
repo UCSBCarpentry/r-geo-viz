@@ -16,4 +16,5 @@ R project for exploratory geospatial data analysis using the `terra` package.
   3. Load and map rasters from `data/forest_maps`.
   4. Manipulate data so that it can be mapped to individual images
   5. Export result to PNG in the project `output/` as seen in file tree).
+- **Verification**: Whenever any `.R` script is edited, run all scripts in sequence (`01` through `05`) to ensure consistency and verify output.
 
