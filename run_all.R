@@ -8,8 +8,9 @@ scripts <- list(
   "02_plot_southwest.R",
   "03_plot_southwest_1900.R",
   "04_plot_western_1900.R",
-  "05_detect_burnt.R",
-  "06_frap_overlay.R"
+  "05_california_composite.R",
+  "06_detect_burnt.R",
+  "07_frap_overlay.R"
 )
 
 for (scr in scripts) {

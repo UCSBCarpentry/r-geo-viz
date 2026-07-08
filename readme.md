@@ -3,8 +3,9 @@
 - This repo demonstrates a geospatial exploratory visualization of pre-1900 wildfire data in the US Pacific Northwest
 - It uses R and Terra
 - The scripts were created using various LLMs underneath OpenCode, including CIT's Gemma 4 and the DREAM Lab's granted GCP.
+- The models used by OpenCode possess machine vision capabilities, allowing them to analyze and verify the visual quality of generated maps in the `output/` directory.
 - Viewing the maps against the data allowed me to conclude that any fire marked 1900 meant that it was BEFORE 1900.
-  - That is stated in the metadata. 
+  - That is NOT stated in the metadata. 
 
 ## Things I learned
 

@@ -38,18 +38,14 @@ load_historic_fires <- function(crs_target = NULL, year = NULL) {
   return(fires)
 }
 
-# Load, downsample (aggregate) and optionally project rasters from forest_maps
-load_rasters <- function(down_factor = 10, crs_target = "EPSG:3857") {
-  raster_files <- list.files("data/forest_maps", pattern = "\\.jpg$", full.names = TRUE)
+# Load rasters from forest_maps (without resampling or projection)
+load_rasters <- function() {
+  raster_files <- list.files("data/forest_maps", pattern = "\\.(jpg|tif)$", full.names = TRUE)
   log_msg(paste("Found", length(raster_files), "raster files"))
   rasters <- lapply(raster_files, function(rf) {
     log_msg(paste("Processing", basename(rf)))
     r <- terra::rast(rf)
-    r_sub <- terra::aggregate(r, fact = down_factor)
-    if (!is.null(crs_target)) {
-      r_sub <- terra::project(r_sub, crs_target)
-    }
-    setNames(list(r_sub), basename(rf))
+    setNames(list(r), basename(rf))
   })
   # flatten named list
   if (length(rasters) == 0) return(list())

@@ -40,16 +40,16 @@ log_msg("Loading, filtering, and projecting historic fires (year 1900) to native
 fires_1900_native <- load_historic_fires(crs_target = native_crs, year = 1900)
 
 # ----------------------------------------------------
-# A. Standard Resolution Map (downsampled by 5, native CRS)
+# A. Full Resolution Map (native CRS)
 # ----------------------------------------------------
-log_msg("Preparing Standard Resolution Rasters (downsampled by 5)...")
-# Downsample cropped native rasters directly without any reprojection/resampling
-r1_sub_std <- terra::aggregate(r1_cropped, fact = 5)
-r2_sub_std <- terra::aggregate(r2_cropped_final, fact = 5)
+log_msg("Preparing Full Resolution Rasters (native CRS)...")
+# Use the cropped native rasters directly without any reprojection/resampling
+r1_std <- r1_cropped
+r2_std <- r2_cropped_final
 
 # Calculate combined extent of the two rasters in native coordinates
-ext1_std <- terra::ext(r1_sub_std)
-ext2_std <- terra::ext(r2_sub_std)
+ext1_std <- terra::ext(r1_std)
+ext2_std <- terra::ext(r2_std)
 combined_ext_std <- terra::ext(
   min(ext1_std[1], ext2_std[1]),
   max(ext1_std[2], ext2_std[2]),
@@ -61,10 +61,10 @@ xlims_std <- c(combined_ext_std[1], combined_ext_std[2])
 ylims_std <- c(combined_ext_std[3], combined_ext_std[4])
 
 ensure_output_dir("output")
-output_path_std <- "output/04_oregon_western_1900_map.png"
-log_msg(paste("Plotting Standard Resolution to:", output_path_std))
+output_path_std <- "output/04_oregon_western_1900_map.jpg"
+log_msg(paste("Plotting Full Resolution to:", output_path_std))
 
-png(output_path_std, width = 2000, height = 1800, res = 200)
+jpeg(output_path_std, width = 2000, height = 1800, res = 200)
 
 # Base plot with county background in native Polyconic coordinates
 terra::plot(or_counties_native, col = "gray95", border = "gray70", lwd = 1,
@@ -73,8 +73,8 @@ terra::plot(or_counties_native, col = "gray95", border = "gray70", lwd = 1,
      mar = c(3, 3, 4, 3))
 
 # Overlay the two rasters: northern map first, then southern map on top (no reprojection!)
-plotRGB(r2_sub_std, r = 1, g = 2, b = 3, add = TRUE)
-plotRGB(r1_sub_std, r = 1, g = 2, b = 3, add = TRUE)
+plotRGB(r2_std, r = 1, g = 2, b = 3, add = TRUE)
+plotRGB(r1_std, r = 1, g = 2, b = 3, add = TRUE)
 
 # Redraw county boundaries on top
 terra::plot(or_counties_native, col = NA, border = "black", lwd = 1.2, add = TRUE)
@@ -113,10 +113,10 @@ combined_ext_hr <- terra::ext(
 xlims_hr <- c(combined_ext_hr[1], combined_ext_hr[2])
 ylims_hr <- c(combined_ext_hr[3], combined_ext_hr[4])
 
-output_path_hr <- "output/04_oregon_western_1900_map_highres.png"
+output_path_hr <- "output/04_oregon_western_1900_map_highres.jpg"
 log_msg(paste("Plotting High Resolution (Original Untouched Scanned Map) to:", output_path_hr))
 
-png(output_path_hr, width = 8000, height = 7200, res = 200)
+jpeg(output_path_hr, width = 8000, height = 7200, res = 200)
 
 # Scale line widths and text size (4x scaled up) for the giant map canvas
 terra::plot(or_counties_native, col = "gray95", border = "gray70", lwd = 4,
