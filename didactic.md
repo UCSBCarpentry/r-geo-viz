@@ -1,28 +1,30 @@
 # Historical Geospatial Forest Fire Visualization: A Narrative & Didactic Guide
 
-This document chronicles our investigative journey and technical workflows, explaining how we progressed from historical georeferenced scanned map rasters to fully integrated geospatial vector overlays of historic forest fires across Oregon and California.
+This document started with an AI prompt.
+It is an outline of our workflows, explaining how we progressed from scanned maps and a couple of shapefiles to a set of R scripts that overlays of historic forest wildfire data across Oregon and California.
 
 ---
 
-## 1. Project Background & Scenario Discovery
+## 1. Project Background
 - **The Core Historical Mystery**:
-  - We began with a set of USGS and Annual Report forest classification maps from the late 19th and early 20th centuries. These maps depict historic land cover, standing timber volume, and notably, massive "burnt" areas.
-  - While modern research heavily documents paleofire records, native cultural burns, and the 20th-century fire suppression regimes that paved the way for modern megafires, the exact perimeters and timing of the large burns shown on these historical maps remained a mystery.
+  - We began with a set of USGS Annual Report forest classification maps from the late 19th and early 20th centuries. These maps depict historic land cover, standing timber volume, and notably, massive "burnt" areas.
+  - While modern research heavily documents paleofire records, native cultural burns, and the 20th-century fire suppression regimes that paved the way for modern megafires, the exact perimeters and timing of the large burns shown on these scanned maps
+  (which I downloaded from davidrumsey.com) remained a mystery.
   - To investigate this, we needed to compare the "burnt" zones marked on the historical scanned maps directly with historical wildfire databases.
 - **The Georeferencing Stage**:
   - Raw scans of maps like the Big Trees Quadrangle, Placerville Quadrangle, and Port Orford Map were found and georeferenced.
-  - This process assigned spatial coordinate systems (such as local Polyconic or Albers projections) to the raw image pixels, producing georeferenced raster files (`.tif` and world files) stored under `data/forest_maps/`.
+  - This is the process of assigning spatial coordinate systems (such as local Polyconic or Albers projections) to the raw image pixels, producing georeferenced raster files (`.tif` and world files) stored under `data/forest_maps/`. Soon the robots will be able to do this for us.
 - **The Vector Search Challenge**:
   - The next crucial step was to find vector shapefiles of historical fire perimeters.
   - Initially, automated assistants struggled to download these databases. They got stuck in robot-unfriendly redirect and download loops between several public open-data platforms.
-  - Ultimately, we successfully acquired and structured two high-signal vector datasets:
-    - **Oregon Historic Fires**: Found in `data/Historic_OR_Fires/` (covering pre-2000 fires).
-    - **California FRAP Fire Perimeters**: Found in `data/California_Historic_Fire_Perimeters_FRAP/` (containing California wildfire histories dating back to the late 1800s).
+  - Ultimately, I paused the agent and downloaded these datasets 'by hand':
+      - **Oregon Historic Fires**: Found in `data/Historic_OR_Fires/` (covering pre-2000 fires).
+      - **California FRAP Fire Perimeters**: Found in `data/California_Historic_Fire_Perimeters_FRAP/` (containing California wildfire histories dating back to the late 1800s).
 
 ---
 
-## 2. Interactive Pipeline & The Role of R Scripts
-To handle the geospatial projection, coordinate transformation, cropping, and rendering, we developed a sequence of R scripts. Below is the step-by-step breakdown of how these scripts run and interact:
+## 2. The R scripts
+To handle the geospatial projection, coordinate transformation, cropping, and rendering, we (the Agent and I) developed a sequence of R scripts. Below is the step-by-step breakdown of how these scripts run and interact:
 
 - **[run_all.R](run_all.R)**:
   - *Purpose*: The master driver script.
@@ -85,6 +87,8 @@ To handle the geospatial projection, coordinate transformation, cropping, and re
     - `output/07_frap_overlay_Placerville.jpg`
     - `output/07_frap_overlay_BigTrees.jpg`
     - `output/07_frap_overlay_PortOrford.jpg`
+- **[agents.md](agents.md)**:
+  - Along the way, I edited the agents file a few times so that I could re-use it with other data. That's where the UCSB maps come from.
 
 ---
 
