@@ -9,10 +9,13 @@
 
 ## Things I learned
 
-1. Between sessions, telling the agent to run all the scripts to learn about the repo seemed to help
+1. Between sessions, telling the agent to run all the scripts to learn about the repo is essential
 1. When moving to a new Coder workspace, the AI will iterate over R scripts to get libraries set up. It will do it largely unsupervised
+2. During one iteration, I had it looking for its own datafiles on the web. As a skilled librarian, I was able to web search, identify and download California and Oregon fire perimeter files faster than the AI. I was able to see it get stuck fetching California fire perimeters from 2 different Arcgis Online addresses (both Living Atlas and cnra.ca.gov). It was nice to be able to pause the agent and then point it directly at the files I fetched and uploaded to my Coder workspace.
+
 
 ## Didactic
 [Here is an outline of how I got to the 9 R scripts](didactic.html)
+
 [Here is what Gemini has to say about how this was made](prompt_history_analysis.html)
-I'm curious about whether gemini can follow along with what is in the history and files. I see it fetching California fire perimeters from arcgis online addresses. both living atlas and cnra.ca.gov addresses. that was slower than googling and downloading a shapefile myself, so I paused the agent and let it keep going
+I prompted this file because I was curious about how well Gemini could interpret its own code in new sessions. 
