@@ -1,4 +1,6 @@
 ## About this project
+This repo was created in conjunction with an [AI Agentic Coding workshop](https://carpentry.library.ucsb.edu/ai-coding-workshop/) at the 
+UCSB Library
 
 - This repo demonstrates a geospatial exploratory visualization of pre-1900 wildfire data in the US Pacific Northwest
 - It uses R and Terra
@@ -14,7 +16,7 @@
 2. During one iteration, I had it looking for its own datafiles on the web. As a skilled librarian, I was able to web search, identify and download California and Oregon fire perimeter files faster than the AI. I was able to see it get stuck fetching California fire perimeters from 2 different Arcgis Online addresses (both Living Atlas and cnra.ca.gov). It was nice to be able to pause the agent and then point it directly at the files I fetched and uploaded to my Coder workspace.
 
 
-![The intriging map legeng](output/forest_legend.jpg)
+![The intriging map legend,20%](output/forest_legend.jpg)
 
 ## Didactic
 [Here is an outline of how I got to the 9 R scripts](didactic.html)
