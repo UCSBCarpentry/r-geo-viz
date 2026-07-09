@@ -16,8 +16,8 @@ UCSB Library
 1. The models used by OpenCode possess machine vision capabilities, allowing them, to some extent, to verify the results saved to the `output/` directory.
 
 ### Try it yourself
-Place the [agents.md](agents.md) file and this [georeferenced map of the Olympic Peninsula in Washington State]
-(https://drive.google.com/file/d/146BUgslWEjz3dZcFYn9rJXUKbii5oh9q/view?usp=sharing)
+Place the [agents.md](agents.md) file and 
+this [georeferenced map of the Olympic Peninsula in Washington State](https://drive.google.com/file/d/146BUgslWEjz3dZcFYn9rJXUKbii5oh9q/view?usp=sharing)
 in a new project space and ask the agent to do some exploratory visualization. 
 
 #### Questions
