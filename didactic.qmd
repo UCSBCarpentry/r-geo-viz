@@ -12,3 +12,12 @@ wildfires back to the 1800s. Get that dataset and make me 3 separate 50% sized p
 representations of the 3 new maps. each one should be the scanned map with the
 relevent portion of the FRAP dataset overlaid on top.`
   a. after a few iterations, I started having the AI print the prompt that generated the output on each jpeg
+  a. This project structure was easy to port over to another folder of data. I started a fresh session in a directory with a slightly edited agents.md and was quickly able to see what was in the folder:
+
+  [UCSB images]
+
+![UCSB Infrastructure Map](output/01_ucsb_infrastructure_map.png)
+*Figure: UCSB Infrastructure Map. This image was created by loading geospatial infrastructure data and mapping it using the `terra` package in R, demonstrating the project's ability to handle diverse geospatial datasets beyond forest maps.*
+
+
+  
