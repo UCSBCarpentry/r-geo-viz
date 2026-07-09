@@ -13,6 +13,6 @@
 1. When moving to a new Coder workspace, the AI will iterate over R scripts to get libraries set up. It will do it largely unsupervised
 
 ## Didactic
-[Here is an outline of how I got to the 9 R scripts](didactic)
+[Here is an outline of how I got to the 9 R scripts](didactic.qmd)
 
 I'm curious about whether gemini can follow along with what is in the history and files. I see it fetching California fire perimeters from arcgis online addresses. both living atlas and cnra.ca.gov addresses. that was slower than googling and downloading a shapefile myself, so I paused the agent and let it keep going
