@@ -27,7 +27,7 @@ ylims <- c(sw_ext_native[3], sw_ext_native[4])
 
 # 5. Ensure output directory
 ensure_output_dir("output")
-output_path <- file.path("output", "02_oregon_southwest_composite_map.jpg")
+output_path <- file.path("output", "02_oregon_southwest_composite_map_v2.1.jpg")
 
 # 6. Plotting
 log_msg(paste("Plotting Southwest Oregon composite to:", output_path))
@@ -35,7 +35,7 @@ jpeg(output_path, width = 2400, height = 1800, res = 200)
 
 terra::plot(or_counties_native, col = "gray95", border = "gray70", lwd = 1,
      xlim = xlims, ylim = ylims,
-     main = "Southwest Oregon Historical Forest Maps, Counties, and Historic Fires\n(Produced by plot_southwest.R)",
+     main = "Southwest Oregon Historical Forest Maps, Counties, and Historic Fires\n[AI-Generated Analysis & Visualization - Version 2.1]",
      mar = c(3, 3, 4, 3))
 
 # Overlay rasters
@@ -55,9 +55,9 @@ terra::plot(or_counties_native, col = NA, border = "black", lwd = 1.2, add = TRU
 terra::plot(fires_native, col = rgb(1, 0, 0, 0.3), border = "darkred", lwd = 0.5, add = TRUE)
 
 # Legend
-legend("bottomleft", legend = c("County Boundaries", "Historic Fires (pre-2000)"),
-       col = c("black", "darkred"), lty = 1, lwd = c(1.2, 1),
-       fill = c(NA, rgb(1, 0, 0, 0.3)), border = c("black", "darkred"),
+legend("bottomleft", legend = c("County Boundaries", "Historic Fires (pre-2000)", "Note: AI-generated Map (v2.1)"),
+       col = c("black", "darkred", "blue"), lty = c(1, 1, 3), lwd = c(1.2, 1, 1),
+       fill = c(NA, rgb(1, 0, 0, 0.3), NA), border = c("black", "darkred", NA),
        bg = "white", cex = 0.8)
 
 dev.off()

@@ -7,8 +7,8 @@ rasters <- load_rasters()
 if (length(rasters) == 0) stop("No rasters found.")
 
 # Define version and generation details
-generation_version <- "1.1"
-generation_prompt <- "expand context to the southwest to accommodate the text box panel"
+generation_version <- "1.2"
+generation_prompt <- "expand context to the southwest to accommodate the text box panel. Clearly explained as AI-generated."
 
 # 2. Load all possible vector layers (Counties, Oregon Fires, California Fires)
 log_msg("Loading global vector layers...")

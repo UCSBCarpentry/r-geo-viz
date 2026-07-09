@@ -24,8 +24,15 @@ detect_burnt <- function(map_path, output_path) {
   print(paste("Processing", map_path))
   map <- rast(map_path)
   
-  # Process at full resolution
-  map_small <- map
+  # Process at downsampled resolution to speed up execution
+  dims <- dim(map)
+  max_dim <- max(dims[1], dims[2])
+  if (max_dim > 2000) {
+    fact <- round(max_dim / 1000)
+    map_small <- terra::aggregate(map, fact = fact)
+  } else {
+    map_small <- map
+  }
   
   # Calculate R-G (Red minus Green)
   # Based on template analysis:
@@ -92,12 +99,15 @@ detect_burnt(target_map, output_file)
 library(terra)
 v <- vect(gsub(".tif", ".geojson", output_file))
 map <- rast(target_map)
-jpg_output <- file.path(output_dir, "06_burnt_plot_CXXVI.jpg")
+jpg_output <- file.path(output_dir, "06_burnt_plot_CXXVI_v6.1.jpg")
  
- jpg(jpg_output, width=1200, height=1000)
- plotRGB(map, r=1, g=2, b=3, stretch="lin", main="Burnt Areas Detection - Plate CXXVI\n(Produced by detect_burnt.R)")
+ jpeg(jpg_output, width=1200, height=1000)
+ plotRGB(map, r=1, g=2, b=3, stretch="lin", main="Burnt Areas Detection - Plate CXXVI\n[AI-Generated Analysis & Visualization - Version 6.1]")
  if (nrow(v) > 0) {
    plot(v, add=TRUE, col=rgb(0, 1, 1, 0.4), border="cyan", lwd=1)
  }
+ legend("bottomleft", legend=c("Detected Burnt Areas", "AI-Generated (v6.1)"),
+        col=c("cyan", "blue"), lty=c(1, 3), lwd=c(2, 1),
+        fill=c(rgb(0, 1, 1, 0.4), NA), border=c("cyan", NA), bg="white")
  dev.off()
  print(paste("Plot saved to", jpg_output))

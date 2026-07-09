@@ -6,8 +6,8 @@ ensure_output_dir("output")
 log_msg("Starting Script 05: Creating Overall Composite Map with ALL georeferenced scanned maps...")
 
 # Define the generation details (filename increment & generating prompt box)
-generation_version <- "5.5"
-generation_prompt <- "flip the color scheme so that red is oldest and yellow is newest"
+generation_version <- "5.6"
+generation_prompt <- "flip the color scheme so that red is oldest and yellow is newest. Clearly explain as AI-generated."
 
 # 1. Discover and load ALL georeferenced rasters across all directories
 all_files <- list.files("data/forest_maps", pattern = "\\.(jpg|tif)$", full.names = TRUE, recursive = TRUE)
@@ -53,7 +53,7 @@ for (name in names(rasters)) {
   dims <- dim(r)
   max_dim <- max(dims[1], dims[2])
   if (max_dim > 3000) {
-    fact <- round(max_dim / 1500)
+    fact <- round(max_dim / 1000)
     log_msg(paste("Aggregating raster", name, "with factor:", fact))
     r <- terra::aggregate(r, fact = fact)
   }

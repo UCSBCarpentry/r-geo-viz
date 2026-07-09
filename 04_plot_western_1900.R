@@ -61,7 +61,7 @@ xlims_std <- c(combined_ext_std[1], combined_ext_std[2])
 ylims_std <- c(combined_ext_std[3], combined_ext_std[4])
 
 ensure_output_dir("output")
-output_path_std <- "output/04_oregon_western_1900_map.jpg"
+output_path_std <- "output/04_oregon_western_1900_map_v4.1.jpg"
 log_msg(paste("Plotting Full Resolution to:", output_path_std))
 
 jpeg(output_path_std, width = 2000, height = 1800, res = 200)
@@ -69,7 +69,7 @@ jpeg(output_path_std, width = 2000, height = 1800, res = 200)
 # Base plot with county background in native Polyconic coordinates
 terra::plot(or_counties_native, col = "gray95", border = "gray70", lwd = 1,
      xlim = xlims_std, ylim = ylims_std,
-     main = "Western Oregon Year 1900 Forest Fires (Plates CXXVI & CXXVII-South)\n(Produced by plot_western_1900.R)",
+     main = "Western Oregon Year 1900 Forest Fires (Plates CXXVI & CXXVII-South)\n[AI-Generated Analysis & Visualization - Version 4.1]",
      mar = c(3, 3, 4, 3))
 
 # Overlay the two rasters: northern map first, then southern map on top (no reprojection!)
@@ -85,9 +85,9 @@ if (nrow(fires_1900_native) > 0) {
 }
 
 # Legend
-legend("bottomleft", legend = c("County Boundaries", "1900 Forest Fires"),
-       col = c("black", "darkred"), lty = 1, lwd = c(1.2, 1),
-       fill = c(NA, rgb(1, 0, 0, 0.4)), border = c("black", "darkred"),
+legend("bottomleft", legend = c("County Boundaries", "1900 Forest Fires", "Note: AI-generated Map (v4.1)"),
+       col = c("black", "darkred", "blue"), lty = c(1, 1, 3), lwd = c(1.2, 1, 1),
+       fill = c(NA, rgb(1, 0, 0, 0.4), NA), border = c("black", "darkred", NA),
        bg = "white", cex = 0.8)
 
 dev.off()
@@ -113,7 +113,7 @@ combined_ext_hr <- terra::ext(
 xlims_hr <- c(combined_ext_hr[1], combined_ext_hr[2])
 ylims_hr <- c(combined_ext_hr[3], combined_ext_hr[4])
 
-output_path_hr <- "output/04_oregon_western_1900_map_highres.jpg"
+output_path_hr <- "output/04_oregon_western_1900_map_highres_v4.1.jpg"
 log_msg(paste("Plotting High Resolution (Original Untouched Scanned Map) to:", output_path_hr))
 
 jpeg(output_path_hr, width = 8000, height = 7200, res = 200)
@@ -121,7 +121,7 @@ jpeg(output_path_hr, width = 8000, height = 7200, res = 200)
 # Scale line widths and text size (4x scaled up) for the giant map canvas
 terra::plot(or_counties_native, col = "gray95", border = "gray70", lwd = 4,
      xlim = xlims_hr, ylim = ylims_hr,
-     main = "Western Oregon Year 1900 Forest Fires (Plates CXXVI & CXXVII-South) - High Res\n(Produced by plot_western_1900.R)",
+     main = "Western Oregon Year 1900 Forest Fires (Plates CXXVI & CXXVII-South) - High Res\n[AI-Generated Analysis & Visualization - Version 4.1]",
      mar = c(3, 3, 4, 3), cex.main = 4)
 
 # Overlay the two untouched rasters 
@@ -137,9 +137,9 @@ if (nrow(fires_1900_native) > 0) {
 }
 
 # Add legend with scaled text size (cex = 3.2)
-legend("bottomleft", legend = c("County Boundaries", "1900 Forest Fires"),
-       col = c("black", "darkred"), lty = 1, lwd = c(4.8, 4),
-       fill = c(NA, rgb(1, 0, 0, 0.4)), border = c("black", "darkred"),
+legend("bottomleft", legend = c("County Boundaries", "1900 Forest Fires", "Note: AI-generated Map (v4.1)"),
+       col = c("black", "darkred", "blue"), lty = c(1, 1, 3), lwd = c(4.8, 4, 4),
+       fill = c(NA, rgb(1, 0, 0, 0.4), NA), border = c("black", "darkred", NA),
        bg = "white", cex = 3.2)
 
 dev.off()

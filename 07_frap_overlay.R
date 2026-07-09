@@ -61,7 +61,7 @@ process_map_frap <- function(map_name, map_path) {
   frap_cropped <- terra::crop(frap_projected, map_extent)
   
   # Define JPEG output path
-  output_jpg <- file.path("output", paste0("07_frap_overlay_", map_name, ".jpg"))
+  output_jpg <- file.path("output", paste0("07_frap_overlay_", map_name, "_v7.1.jpg"))
   log_msg(paste("Plotting and saving map to:", output_jpg))
   
   # Set the jpeg resolution/dimensions based on original size.
@@ -90,20 +90,24 @@ process_map_frap <- function(map_name, map_path) {
   y_max <- map_extent[4]
   
   box_w <- (x_max - x_min) * 0.45
-  box_h <- (y_max - y_min) * 0.08
+  box_h <- (y_max - y_min) * 0.11
   
   # Background for title
   rect(x_min + (x_max - x_min)*0.02, y_max - (y_max - y_min)*0.02 - box_h,
        x_min + (x_max - x_min)*0.02 + box_w, y_max - (y_max - y_min)*0.02,
        col = rgb(1, 1, 1, 0.9), border = "black", lwd = 1.5)
   
-  text(x_min + (x_max - x_min)*0.03, y_max - (y_max - y_min)*0.05,
+  text(x_min + (x_max - x_min)*0.03, y_max - (y_max - y_min)*0.04,
        labels = paste(map_name, "Quadrangle with FRAP Wildfires"),
        adj = c(0, 0.5), font = 2, cex = 1.5)
   
-  text(x_min + (x_max - x_min)*0.03, y_max - (y_max - y_min)*0.08,
+  text(x_min + (x_max - x_min)*0.03, y_max - (y_max - y_min)*0.07,
        labels = "Red overlays indicate historic California fire perimeters",
        adj = c(0, 0.5), font = 3, cex = 1.1, col = "darkred")
+
+  text(x_min + (x_max - x_min)*0.03, y_max - (y_max - y_min)*0.10,
+       labels = "AI-Generated Analysis & Visualization - Version 7.1",
+       adj = c(0, 0.5), font = 2, cex = 1.1, col = "blue")
   
   dev.off()
   log_msg(paste("Successfully saved", output_jpg))
@@ -114,4 +118,4 @@ process_map_frap("Placerville", map_paths$Placerville)
 process_map_frap("BigTrees", map_paths$BigTrees)
 process_map_frap("PortOrford", map_paths$PortOrford)
 
-log_msg("Script 06 complete!")
+log_msg("Script 07 complete!")

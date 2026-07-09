@@ -14,11 +14,11 @@ scripts <- list(
 )
 
 for (scr in scripts) {
-  log_msg(paste("Running", scr))
+  log_msg(paste("Running [AI-Driven Workflow Task]:", scr))
   tryCatch({
     source(scr, local = TRUE)
-    log_msg(paste("Finished", scr))
+    log_msg(paste("Finished [AI-Driven Workflow Task]:", scr))
   }, error = function(e) {
-    log_msg(paste("Error in", scr, ":", e$message))
+    log_msg(paste("Error in AI task", scr, ":", e$message))
   })
 }
