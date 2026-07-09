@@ -12,6 +12,8 @@
 1. Between sessions, telling the agent to run all the scripts to learn about the repo seemed to help
 1. When moving to a new Coder workspace, the AI will iterate over R scripts to get libraries set up. It will do it largely unsupervised
 
+![The intriging map legeng](output/forest_legend.jpg)
+
 ## Didactic
 [Here is an outline of how I got to the 9 R scripts](didactic.html)
 
