@@ -16,22 +16,23 @@ UCSB Library
 1. The models used by OpenCode possess machine vision capabilities, allowing them, to some extent, to verify the results saved to the `output/` directory.
 
 ### Try it yourself
-Place the agents.md file and this (georeferenced map of the Olympic Peninsula in Washington State)
-[https://drive.google.com/file/d/146BUgslWEjz3dZcFYn9rJXUKbii5oh9q/view?usp=sharing]
-in a new project space and do some basic visualization. 
+Place the [agents.md](agents.md) file and this [georeferenced map of the Olympic Peninsula in Washington State]
+(https://drive.google.com/file/d/146BUgslWEjz3dZcFYn9rJXUKbii5oh9q/view?usp=sharing)
+in a new project space and ask the agent to do some exploratory visualization. 
 
-####Questions
+#### Questions
 1. Are there areas on the scanned map that represent 19th century burns?
 2. Do these area correspond to known digital data sources / contemporary research data?
 
-####Tips
+#### Tips
 - you are starting without base data, so ask opencode for a shapefile of washington counties, points of interest, or rivers
+- specify where you want your output
 - you may want to provide your own fire perimeter data
 
 <img src="output/forest_legend.jpg" width="300" alt="The intriguing map legend">
 
 ## Didactic
-[Here is an outline of how I got to the 9 R scripts](didactic.md)
+[Here is a mpre detailed outline of how OpenCode and I got to the 9 R scripts](didactic.md)
 
-[Here is what Gemini has to say about how this was made](prompt_history_analysis.md)
+[Here is an unedited version of what Gemini has to say about how this was made](prompt_history_analysis.md)
 I prompted this file because I was curious about how well Gemini could interpret its own code in new sessions. 
