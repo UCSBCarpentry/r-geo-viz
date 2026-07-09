@@ -14,5 +14,5 @@
 
 ## Didactic
 [Here is an outline of how I got to the 9 R scripts](didactic.html)
-
+[Here is what Gemini has to say about how this was made](prompt_history_analysis.html)
 I'm curious about whether gemini can follow along with what is in the history and files. I see it fetching California fire perimeters from arcgis online addresses. both living atlas and cnra.ca.gov addresses. that was slower than googling and downloading a shapefile myself, so I paused the agent and let it keep going
