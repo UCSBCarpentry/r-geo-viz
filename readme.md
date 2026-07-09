@@ -19,7 +19,7 @@ UCSB Library
 <img src="output/forest_legend.jpg" width="300" alt="The intriguing map legend">
 
 ## Didactic
-[Here is an outline of how I got to the 9 R scripts](didactic.html)
+[Here is an outline of how I got to the 9 R scripts](didactic.md)
 
-[Here is what Gemini has to say about how this was made](prompt_history_analysis.html)
+[Here is what Gemini has to say about how this was made](prompt_history_analysis.md)
 I prompted this file because I was curious about how well Gemini could interpret its own code in new sessions. 
